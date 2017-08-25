@@ -40,7 +40,7 @@ Resources:
         PostResource:
           Type: Api
           Properties:
-            RestApiId: !Ref DemoApiGateway
+            RestApiId: !Ref MoodleTenantApiGateway
             Path: /moodle/tenants
             Method: post
 

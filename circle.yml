@@ -13,6 +13,10 @@ dependencies:
 test:
   override:
     - ./gradlew clean buildZip
+    - aws cloudformation validate-template --template-body file://formation_assets.yaml
+    - aws cloudformation validate-template --template-body file://formation_env.yaml
+    - aws cloudformation validate-template --template-body file://formation_recordset.yaml
+
 
 deployment:
   development:
