@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Demo Organization Api Environment Assets
+Description: Moode Tenant Api Environment Assets
 
 Parameters:
   ApiGateway:
@@ -37,7 +37,7 @@ Resources:
   PostMoodleTenantLambdaFunctionAlias:
     Type: AWS::Lambda::Alias
     Properties:
-      FunctionName: !ImportValue OrganizationGetHandlerArn
+      FunctionName: !ImportValue MoodleTenantPostHandlerArn
       FunctionVersion: !ImportValue MoodleTenantDetailVersion
       Name: !Ref StageName
 
@@ -45,9 +45,9 @@ Resources:
   PostMoodleTenantLambdaFunctionInvokePermission:
     Type: AWS::Lambda::Permission
     DependsOn:
-      - GetAllOrganizationsLambdaFunctionAlias
+      - PostMoodleTenantLambdaFunctionAlias
     Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      FunctionName: !Join [":", [ !ImportValue OrganizationGetHandlerArn, !Ref StageName]]
+      FunctionName: !Join [":", [ !ImportValue MoodleTenantPostHandlerArn, !Ref StageName]]
       SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateway}/${StageName}/*

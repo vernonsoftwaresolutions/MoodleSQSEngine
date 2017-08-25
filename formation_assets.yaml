@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
-Description: Demo Organization Api Assets
+Description: Moodel Tenant Api Assets
 
 Parameters:
   StageName:
@@ -17,12 +17,12 @@ Resources:
         info:
           title: !Ref AWS::StackName
         paths:
-          "/organizations":
-            get:
+          "//moodle/tenants":
+            post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OrganizationGetHandler.Arn}:${!stageVariables.env}/invocations
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MoodleTenantPostHandler.Arn}:${!stageVariables.env}/invocations
               responses: {}
 
   # Application assets
@@ -54,10 +54,10 @@ Resources:
 Outputs:
   DemoApiGatewayRef:
     Value: !Ref MoodleTenantApiGateway
-  OrganizationGetHandler:
+  MoodleTenantPostHandler:
     Value: !GetAtt MoodleTenantPostHandler.Arn
     Export:
-      Name: OrganizationGetHandlerArn
+      Name: MoodleTenantPostHandlerArn
   MoodleTenantDetailVersion:
     Value: !GetAtt MoodleTenantDetailVersion.Version
     Export:
