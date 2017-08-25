@@ -35,7 +35,7 @@ aws cloudformation package --template-file \
 ##
 aws cloudformation deploy --template-file \
     formation_assets_output.yaml --capabilities CAPABILITY_IAM \
-    --stack-name "${API_NAME}" StageName="${ENV}"
+    --stack-name ${API_NAME} StageName=${ENV}
 
 ##
 # get the api gateway ref
