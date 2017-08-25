@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: Demo Organization Api Assets
+
+Parameters:
+  StageName:
+    Description: Stage name
+    Type: String
+
+Resources:
+  MoodleTenantApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref StageName
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          title: !Ref AWS::StackName
+        paths:
+          "/organizations":
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OrganizationGetHandler.Arn}:${!stageVariables.env}/invocations
+              responses: {}
+
+  # Application assets
+  MoodleTenantPostHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.moodle.tenant.PostMoodleTenantHandler
+      MemorySize: 512
+      Runtime: java8
+      CodeUri: build/distributions/MoodleTenantlambda.zip
+      Environment:
+        Variables:
+          DUMMY: Value
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DemoApiGateway
+            Path: /moodle/tenants
+            Method: post
+
+  MoodleTenantDetailVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName:
+        Ref: MoodleTenantPostHandler
+      Description: Most recent published version
+
+Outputs:
+  DemoApiGatewayRef:
+    Value: !Ref MoodleTenantApiGateway
+  OrganizationGetHandler:
+    Value: !GetAtt MoodleTenantPostHandler.Arn
+    Export:
+      Name: OrganizationGetHandlerArn
+  MoodleTenantDetailVersion:
+    Value: !GetAtt MoodleTenantDetailVersion.Version
+    Export:
+      Name: MoodleTenantDetailVersion
