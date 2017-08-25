@@ -44,8 +44,8 @@ Resources:
   ## Invoke Permissions
   PostMoodleTenantLambdaFunctionInvokePermission:
     Type: AWS::Lambda::Permission
-    DependsOn:
-      - PostMoodleTenantLambdaFunctionAlias
+   ## DependsOn:
+     # - PostMoodleTenantLambdaFunctionAlias
     Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
