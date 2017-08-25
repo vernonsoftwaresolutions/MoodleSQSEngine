@@ -34,7 +34,7 @@ Resources:
           LoggingLevel: INFO
           ResourcePath: "/*"
           MetricsEnabled: true
- UrlMapping:
+  UrlMapping:
     Type: AWS::ApiGateway::BasePathMapping
     DependsOn:
       - ApiGatewayStage
