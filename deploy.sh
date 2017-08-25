@@ -50,7 +50,7 @@ echo "api gateway ref ${apiGatewayApiRef}"
 ##
 deploymentId=`aws apigateway get-stages \
                  --rest-api-id "${apiGatewayApiRef}" \
-                 --query "[item[?stageName=='Latest']][0][0].deploymentId" \
+                 --query "[item[?stageName=='Stage']][0][0].deploymentId" \
                  --output text`
 echo "deploymentId ${deploymentId}"
 
