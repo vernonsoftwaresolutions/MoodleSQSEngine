@@ -19,5 +19,5 @@ deployment:
     branch: master
     commands:
       ## Get current stages
-      - sh ./deploy.sh circleci.deployables $CIRCLE_BUILD_NUM dev vssdevelopment.com api
+      - sh ./cloudformation/deploy.sh circleci.deployables $CIRCLE_BUILD_NUM dev vssdevelopment.com api
     #  - sh ./run-postman-tests.sh
