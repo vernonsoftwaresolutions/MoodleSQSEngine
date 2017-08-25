@@ -70,6 +70,7 @@ echo "about to deploy environment with variables ${apiGatewayApiRef} ${ENV} ${de
 aws cloudformation deploy --template-file \
     formation_env_output.yaml --capabilities CAPABILITY_IAM \
     --stack-name "${API_NAME}-${ENV}" \
-    --parameter-overrides APIGateway="${apiGatewayApiRef}" StageName="${ENV}" DeploymentId="${deploymentId}" Version="${VERSION}" DomainName="${DNSNAME}" || exit 0
+    --parameter-overrides ApiGateway="${apiGatewayApiRef}" \
+    StageName="${ENV}" DeploymentId="${deploymentId}" Version="${VERSION}" DomainName="${DNSNAME}"
 
 
