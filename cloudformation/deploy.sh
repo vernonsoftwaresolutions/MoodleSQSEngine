@@ -14,7 +14,7 @@ API_NAME="moodletenant"
 # Package record set
 ##
 aws cloudformation package --template-file \
-    cloudformation/formation_recordset.yaml --output-template-file \
+    formation_recordset.yaml --output-template-file \
     formation_recordset_output.yaml --s3-bucket $S3_BUCKET
 
 ##
@@ -27,7 +27,7 @@ aws cloudformation deploy --template-file \
 # Package API Gateway Assets
 ##
 aws cloudformation package --template-file \
-    cloudformation/formation_assets.yaml --output-template-file \
+    formation_assets.yaml --output-template-file \
     formation_assets_output.yaml --s3-bucket $S3_BUCKET
 
 ##
