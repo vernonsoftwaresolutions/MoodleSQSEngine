@@ -1,0 +1,23 @@
+#vpc-c7aa77be
+#subnet-b61d81fe,subnet-0202dc58
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  RecordSet:
+    Type: String
+    Description: Name of moodle client
+  HostedZoneName:
+    Type: String
+    Description:  Hosted zone name
+
+Resources:
+
+  # Record Set for moodle instance
+  MoodleApiDNS:
+      Type: AWS::Route53::RecordSetGroup
+      Properties:
+        HostedZoneName: !Join [".", [ !Ref HostedZoneName , ""]]
+        Comment: Record Set for lambda function
+        RecordSets:
+        - Name:
+            !Join [".", [ !Ref RecordSet , !Ref HostedZoneName]]
+          Type: A

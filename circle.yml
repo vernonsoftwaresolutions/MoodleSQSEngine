@@ -1,0 +1,23 @@
+machine:
+  python:
+    version: 2.7.11
+
+dependencies:
+  override:
+     - chmod +x gradlew
+  pre:
+     - pip install awscli
+     - aws configure set default.region us-east-1
+  post:
+#     - npm install newman --global
+test:
+  override:
+    - ./gradlew clean buildZip
+
+deployment:
+  development:
+    branch: master
+    commands:
+      ## Get current stages
+      - sh ./deploy.sh circleci.deployables $CIRCLE_BUILD_NUM dev vssdevelopment.com api
+    #  - sh ./run-postman-tests.sh
