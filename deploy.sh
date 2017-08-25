@@ -26,16 +26,16 @@ aws cloudformation deploy --template-file \
 ##
 # Package API Gateway Assets
 ##
-aws cloudformation package --template-file \
-    formation_assets.yaml --output-template-file \
-    formation_assets_output.yaml --s3-bucket $S3_BUCKET
+#aws cloudformation package --template-file \
+#    formation_assets.yaml --output-template-file \
+#    formation_assets_output.yaml --s3-bucket $S3_BUCKET
 
 ##
 # Deploy Assets
 ##
-aws cloudformation deploy --template-file \
-    formation_assets_output.yaml --capabilities CAPABILITY_IAM \
-    --stack-name "${API_NAME}" StageName="${ENV}"
+#aws cloudformation deploy --template-file \
+#    formation_assets_output.yaml --capabilities CAPABILITY_IAM \
+#    --stack-name "${API_NAME}" StageName="${ENV}"
 
 ##
 # get the api gateway ref
