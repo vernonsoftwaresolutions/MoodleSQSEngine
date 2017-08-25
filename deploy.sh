@@ -42,7 +42,7 @@ aws cloudformation deploy --template-file \
 ##
 apiGatewayApiRef=`aws cloudformation describe-stacks \
                     --stack-name "${API_NAME}" --query \
-                    "Stacks[0].[Outputs[? starts_with(OutputKey, 'ApiGatewayApiRef')]][0][*].{OutputValue:OutputValue}" \
+                    "Stacks[0].[Outputs[? starts_with(OutputKey, 'DemoApiGatewayRef')]][0][*].{OutputValue:OutputValue}" \
                     --output text`
 echo "api gateway ref ${apiGatewayApiRef}"
 ##
