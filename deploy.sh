@@ -59,7 +59,7 @@ echo "deploymentId ${deploymentId}"
 ##
 LAMBDANAME=`aws cloudformation describe-stacks \
             --stack-name "${API_NAME}"  \
-            --query "Stacks[0].[Outputs[?starts_with(OutputValue, \'arn:aws:lambda\')]][0][*].{OutputValue:OutputValue}" --output=text`
+            --query "Stacks[0].[Outputs[?starts_with(OutputValue, 'arn:aws:lambda')]][0][*].{OutputValue:OutputValue}" --output=text`
 
 echo "retrieved lambda name ${LAMBDANAME}"
 LAMBDAVERSION=`aws lambda publish-version \
