@@ -13,7 +13,7 @@ Resources:
         info:
           title: !Ref AWS::StackName
         paths:
-          "//moodle/tenants":
+          "/moodle/tenants":
             post:
               x-amazon-apigateway-integration:
                 httpMethod: POST
