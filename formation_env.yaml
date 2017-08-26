@@ -35,15 +35,15 @@ Resources:
           ResourcePath: "/*"
           MetricsEnabled: true
 
- # UrlMapping:
- #   Type: AWS::ApiGateway::BasePathMapping
- #   DependsOn:
- #     - ApiGatewayStage
- #   Properties:
- #     BasePath: !Ref StageName
- #     DomainName: !Ref DomainName
- #     RestApiId: !Ref APIGateway
- #     Stage: !Ref StageName
+  UrlMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    DependsOn:
+      - ApiGatewayStage
+    Properties:
+      BasePath: !Ref StageName
+      DomainName: !Ref DomainName
+      RestApiId: !Ref APIGateway
+      Stage: !Ref StageName
 
   # Moodle Tenant alian
   PostMoodleTenantLambdaFunctionAlias:
@@ -54,12 +54,12 @@ Resources:
       Name: !Ref StageName
 
   ## Invoke Permissions
-  #PostMoodleTenantLambdaFunctionInvokePermission:
-  #  Type: AWS::Lambda::Permission
-  #  DependsOn:
-  #    - PostMoodleTenantLambdaFunctionAlias
-  #  Properties:
-  ##    Action: lambda:InvokeFunction
-   #   Principal: apigateway.amazonaws.com
-   #   FunctionName: !Join [":", [ !ImportValue MoodleTenantPostHandlerArn, !Ref StageName]]
-   #   SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateway}/${StageName}/*
+  PostMoodleTenantLambdaFunctionInvokePermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - PostMoodleTenantLambdaFunctionAlias
+    Properties:
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      FunctionName: !Join [":", [ !ImportValue MoodleTenantPostHandlerArn, !Ref StageName]]
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateway}/${StageName}/*

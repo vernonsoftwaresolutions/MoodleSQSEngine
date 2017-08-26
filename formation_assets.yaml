@@ -2,17 +2,12 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Description: Moodel Tenant Api Assets
 
-Parameters:
-  StageName:
-    Description: Stage name
-    Type: String
-
 Resources:
   #API Gateway definition
   MoodleTenantApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: !Ref StageName
+      StageName: Latest
       DefinitionBody:
         swagger: 2.0
         info:
