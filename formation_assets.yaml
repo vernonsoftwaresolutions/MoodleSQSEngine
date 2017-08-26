@@ -8,6 +8,7 @@ Parameters:
     Type: String
 
 Resources:
+  #API Gateway definition
   MoodleTenantApiGateway:
     Type: AWS::Serverless::Api
     Properties:
@@ -30,6 +31,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.moodle.tenant.PostMoodleTenantHandler
+      FunctionName: MoodleTenantPostHandler
       MemorySize: 512
       Runtime: java8
       CodeUri: build/distributions/MoodleTenantlambda.zip
@@ -54,10 +56,12 @@ Resources:
 Outputs:
   DemoApiGatewayRef:
     Value: !Ref MoodleTenantApiGateway
-  MoodleTenantPostHandler:
+
+  MoodleTenantPostHandlerArn:
     Value: !GetAtt MoodleTenantPostHandler.Arn
     Export:
       Name: MoodleTenantPostHandlerArn
+
   MoodleTenantDetailVersion:
     Value: !GetAtt MoodleTenantDetailVersion.Version
     Export:
