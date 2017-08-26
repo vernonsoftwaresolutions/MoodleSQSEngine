@@ -12,6 +12,9 @@ Parameters:
   DeploymentId:
     Description: Current Deployment Id
     Type: String
+  Version:
+    Description: Deployment version number
+    Type: String
   DomainName:
     Type: String
 
@@ -48,7 +51,7 @@ Resources:
     Type: AWS::Lambda::Alias
     Properties:
       FunctionName: !ImportValue MoodleTenantPostHandlerArn
-      FunctionVersion: !ImportValue MoodleTenantDetailVersion
+      FunctionVersion: !Ref Version
       Name: !Ref StageName
 
   ## Invoke Permissions

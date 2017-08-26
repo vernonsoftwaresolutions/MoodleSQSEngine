@@ -65,7 +65,7 @@ echo "retrieved lambda name ${LAMBDANAME}"
 LAMBDAVERSION=`aws lambda publish-version \
                 --function-name "${LAMBDANAME}" \
                 --description "${VERSION}" \
-                --query '{Version:Version}'`
+                --query '{Version:Version}' --output=text`
 
 ##
 # Package the environment template
@@ -83,6 +83,6 @@ aws cloudformation deploy --template-file \
     formation_env_output.yaml --capabilities CAPABILITY_IAM \
     --stack-name "${API_NAME}-${ENV}" \
     --parameter-overrides ApiGateway="${apiGatewayApiRef}" \
-    StageName="${ENV}" DeploymentId="${deploymentId}" DomainName="${DNSNAME}" || exit 0
+    StageName="${ENV}" DeploymentId="${deploymentId}" DomainName="${DNSNAME}" Version="${LAMBDAVERSION}"|| exit 0
 
 
