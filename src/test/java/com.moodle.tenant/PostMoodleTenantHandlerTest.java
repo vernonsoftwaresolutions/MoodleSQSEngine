@@ -14,7 +14,7 @@ public class PostMoodleTenantHandlerTest {
     @Test
     public void handleRequest() throws Exception {
 
-        assertThat(handler.handleRequest(new MoodleTenant(), null), is("Fin"));
+        assertThat(handler.handleRequest(new MoodleTenant(), null).getBody(), is("{\"outputValue\":\"SOME VALUE\"}"));
     }
 
 }
