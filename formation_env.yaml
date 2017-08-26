@@ -17,6 +17,8 @@ Parameters:
     Type: String
   DomainName:
     Type: String
+  FunctionName:
+    Type: String
 
 Resources:
 
@@ -45,7 +47,7 @@ Resources:
  #     RestApiId: !Ref APIGateway
  #     Stage: !Ref StageName
 
-  # Moodle Tenant alian
+  # Moodle Tenant alias
   PostMoodleTenantLambdaFunctionAlias:
     Type: AWS::Lambda::Alias
     Properties:
@@ -61,5 +63,5 @@ Resources:
     Properties:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      FunctionName: !Join [":", [ !ImportValue MoodleTenantPostHandlerArn, !Ref StageName]]
+      FunctionName: !Join [":", [ !Ref FunctionName, !Ref StageName]]
       SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateway}/${StageName}/*

@@ -71,6 +71,6 @@ aws cloudformation deploy --template-file \
     formation_env_output.yaml --capabilities CAPABILITY_IAM \
     --stack-name "${API_NAME}-${ENV}" \
     --parameter-overrides ApiGateway="${apiGatewayApiRef}" \
-    StageName="${ENV}" DeploymentId="${deploymentId}" Version="${VERSION}" DomainName="${DNSNAME}"
+    StageName="${ENV}" DeploymentId="${deploymentId}" Version="${VERSION}" DomainName="${DNSNAME}" FunctionName=MoodleTenantPostHandler
 
 
