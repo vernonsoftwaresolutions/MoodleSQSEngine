@@ -13,4 +13,11 @@ public class Output {
     public void setOutputValue(String outputValue) {
         this.outputValue = outputValue;
     }
+
+    @Override
+    public String toString() {
+        return "Output{" +
+                "outputValue='" + outputValue + '\'' +
+                '}';
+    }
 }

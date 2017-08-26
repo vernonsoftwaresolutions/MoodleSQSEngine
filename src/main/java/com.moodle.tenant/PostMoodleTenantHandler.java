@@ -28,6 +28,7 @@ public class PostMoodleTenantHandler implements RequestHandler<MoodleTenant, Pro
         log.info("Received request "+ input);
         Output output = new Output();
         output.setOutputValue("SOME VALUE");
+        log.info("about to return output " + output);
         return factory.createResponse(output, HttpStatus.SC_OK, null);
     }
 }

@@ -54,6 +54,18 @@ deploymentId=`aws apigateway get-stages \
                  --output text`
 echo "deploymentId ${deploymentId}"
 
+##
+# Publish new lambda version
+##
+LAMBDANAME=`aws cloudformation describe-stacks \
+            --stack-name "${API_NAME}"  \
+            --query "Stacks[0].[Outputs[?starts_with(OutputValue, \'arn:aws:lambda\')]][0][*].{OutputValue:OutputValue}"`
+
+echo "retrieved lambda name ${LAMBDANAME}"
+LAMBDAVERSION=`aws lambda publish-version \
+                --function-name "${LAMBDANAME}" \
+                --description "${VERSION}" \
+                --query '{Version:Version}'`
 
 ##
 # Package the environment template
@@ -65,12 +77,12 @@ aws cloudformation package --template-file \
 ##
 # Deploy template
 ##
-echo "about to deploy environment with variables ${apiGatewayApiRef} ${ENV} ${deploymentId} ${VERSION} ${DNSNAME}"
+echo "about to deploy environment with variables ${apiGatewayApiRef} ${ENV} ${deploymentId} ${LAMBDAVERSION} ${DNSNAME}"
 
 aws cloudformation deploy --template-file \
     formation_env_output.yaml --capabilities CAPABILITY_IAM \
     --stack-name "${API_NAME}-${ENV}" \
     --parameter-overrides ApiGateway="${apiGatewayApiRef}" \
-    StageName="${ENV}" DeploymentId="${deploymentId}" Version="${VERSION}" DomainName="${DNSNAME}" FunctionName=MoodleTenantPostHandler
+    StageName="${ENV}" DeploymentId="${deploymentId}" DomainName="${DNSNAME}" || exit 0
 
 
