@@ -64,4 +64,4 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       FunctionName: !Join [":", [ !Ref FunctionName, !Ref StageName]]
-      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${APIGateway}/${StageName}/*
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGateway}/${StageName}/*
