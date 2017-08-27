@@ -83,6 +83,6 @@ aws cloudformation deploy --template-file \
     formation_env_output.yaml --capabilities CAPABILITY_IAM \
     --stack-name "${API_NAME}-${ENV}" \
     --parameter-overrides ApiGateway="${apiGatewayApiRef}" \
-    StageName="${ENV}" DeploymentId="${deploymentId}" DomainName="${DNSNAME}" Version="${LAMBDAVERSION}"|| exit 0
+    StageName="${ENV}" DeploymentId="${deploymentId}" DomainName="${DNSNAME}" Version="${LAMBDAVERSION}" DomainName="${DNSNAME}"|| exit 0
 
 
