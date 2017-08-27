@@ -37,14 +37,14 @@ Resources:
           MetricsEnabled: true
 
  # UrlMapping:
- #   Type: AWS::ApiGateway::BasePathMapping
- #   DependsOn:
- #     - ApiGatewayStage
- #   Properties:
- #     BasePath: !Ref StageName
- #     DomainName: !Ref DomainName
- #     RestApiId: !Ref APIGateway
- #     Stage: !Ref StageName
+    Type: AWS::ApiGateway::BasePathMapping
+    DependsOn:
+      - ApiGatewayStage
+    Properties:
+      BasePath: !Ref StageName
+      DomainName: !Ref DomainName
+      RestApiId: !Ref APIGateway
+      Stage: !Ref StageName
 
   # Moodle Tenant alias
   PostMoodleTenantLambdaFunctionAlias:
