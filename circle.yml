@@ -24,6 +24,6 @@ deployment:
     branch: master
     commands:
       ## Get current stages
-      - sh ./deploy.sh lambda.bucket.moodle $CIRCLE_BUILD_NUM dev api.vssdevelopment.com api
+      - sh ./deploy.sh lambda.bucket.moodle $CIRCLE_BUILD_NUM dev api.vssdevelopment.com vssdevelopment.com
     #  - sh ./run-postman-tests.sh
 

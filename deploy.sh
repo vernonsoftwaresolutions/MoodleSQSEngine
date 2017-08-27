@@ -6,7 +6,7 @@ S3_BUCKET=$1
 VERSION=$2
 ENV=$3
 DNSNAME=$4
-RecordSet=$5
+HOSTEDZONENAME=$5
 
 API_NAME="moodletenant"
 
@@ -35,7 +35,7 @@ aws cloudformation package --template-file \
 ##
 aws cloudformation deploy --template-file \
     formation_assets_output.yaml --capabilities CAPABILITY_IAM \
-    --stack-name ${API_NAME}  --parameter-overrides MoodleAPIDNSName="${DNSNAME}"
+    --stack-name ${API_NAME}  --parameter-overrides MoodleAPIDNSName="${DNSNAME}" HostedZoneName="${HOSTEDZONENAME}"
 
 ##
 # get the api gateway ref
