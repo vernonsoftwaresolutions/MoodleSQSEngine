@@ -2,7 +2,38 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Description: Moodel Tenant Api Assets
 
+Parameters:
+
+  HostedZoneName:
+    Type: String
+    Description: Name of hosted zone
+    Default: vssdevelopment.com.
+  MoodleAPIDNSName:
+    Type: String
+    Description: Name of Logstash route 53 entry to use for target
+    Default: api.vssdevelopment.com
 Resources:
+
+  LambdaCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName:
+        Ref: MoodleAPIDNSName
+
+#  MoodleAPIDNS:
+#    Type: AWS::Route53::RecordSetGroup
+#    Properties:
+#      HostedZoneName:
+#        Ref: HostedZoneName
+#      Comment: Zone apex alias targeted to LogstashLoadBalancer.
+#      RecordSets:
+#      - Name:
+##          !Join [ "", [Ref: MoodleAPIDNSName, "."]]
+ #       Type: A
+ #       AliasTarget:
+ #         HostedZoneId: Z2FDTNDATAQYW2 # This is hardcoded for all CloudFormation templates
+ #         DNSName: !GetAtt LogstashLoadBalancer.DNSName
+
   #API Gateway definition
   MoodleTenantApiGateway:
     Type: AWS::Serverless::Api
@@ -49,6 +80,9 @@ Resources:
       Description: Most recent published version
 
 Outputs:
+  LambdaCertificate:
+    Value: !Ref LambdaCertificate
+
   DemoApiGatewayRef:
     Value: !Ref MoodleTenantApiGateway
 
