@@ -12,7 +12,7 @@ dependencies:
 
   post:
     # pull down ecs template from s3
-    - aws s3 cp s3://moodle.templates/ecs/ecs.yml
+    - aws s3 cp s3://moodle.templates/ecs/ecs.yml ecs.yml
     # now create ecs deployment
     - aws cloudformation validate-template --template-body file://ecs.yml
     - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
