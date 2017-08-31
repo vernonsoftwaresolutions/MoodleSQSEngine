@@ -16,7 +16,7 @@ dependencies:
     # now create ecs deployment
     - aws cloudformation validate-template --template-body file://ecs.yml
     - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
-    - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium
+    - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
 test:
   override:
     - ./gradlew clean buildZip
