@@ -31,6 +31,9 @@ public class PostMoodleTenantHandler implements RequestHandler<StackRequest, Pro
     public PostMoodleTenantHandler() {
         factory = new ProxyResponseFactory();
         executor = new TemplateExecutor(AmazonCloudFormationClientBuilder.defaultClient());
+        
+        //todo-refactor this to one call tp build client
+        client = new CloudformationClientImpl(AmazonCloudFormationClientBuilder.defaultClient());
     }
 
     public PostMoodleTenantHandler(ProxyResponseFactory factory, TemplateExecutor executor,
