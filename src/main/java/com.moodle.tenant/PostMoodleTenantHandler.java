@@ -8,7 +8,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.moodle.tenant.cloudformation.MoodleTemplate;
 import com.moodle.tenant.cloudformation.TemplateExecutor;
-import com.moodle.tenant.cloudformation.client.CloudformationClient;
+import com.moodle.tenant.cloudformation.client.*;
 import com.moodle.tenant.factory.ProxyResponseFactory;
 import com.moodle.tenant.lambda.ProxyResponse;
 import com.moodle.tenant.model.StackRequest;
