@@ -95,7 +95,7 @@ Resources:
       Environment:
         Variables:
           DUMMY: Value
-      Role: !Ref: ClusterInstanceRole
+      Role: !Ref ClusterInstanceRole
       Events:
         PostResource:
           Type: Api
