@@ -27,10 +27,10 @@ build.dependsOn buildZip
 
 dependencies {
     compile('com.amazonaws:aws-lambda-java-core:1.1.0')
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-cloudformation', version: '1.11.182'
+    //compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.105'
     compile('log4j:log4j:1.2.17')
     compile('com.amazonaws:aws-lambda-java-log4j:1.0.0')
-    compile group: 'com.amazonaws', name: 'aws-java-sdk-cloudformation', version: '1.9.3'
-    compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.105'
 
     testCompile('org.mockito:mockito-core:1.8.4')
     testCompile('junit:junit:4.11')
