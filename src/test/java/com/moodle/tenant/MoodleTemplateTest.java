@@ -75,7 +75,7 @@ public class MoodleTemplateTest {
     public void createTemplateStackName() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
-        assertThat(template.getStackName(), is(stackName));
+        assertThat(template.getStackName(), is(clientName));
 
     }
     @Test
@@ -126,11 +126,19 @@ public class MoodleTemplateTest {
 
         assertThat(getParameter(template.getParameters(), alblistenerKey), is(alblistener));
 
-    }   @Test
+    }
+    @Test
     public void createTemplateeecslbhostedZoneName() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
         assertThat(getParameter(template.getParameters(), hostedZoneNameKey), is(hostedZoneName));
+
+    }
+    @Test
+    public void createTemplateVPC() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(getParameter(template.getParameters(), vpcKey), is(vpc));
 
     }
     public String getParameter(List<Parameter> parameters, String key){

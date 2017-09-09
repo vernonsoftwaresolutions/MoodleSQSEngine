@@ -33,7 +33,7 @@ public class MoodleTemplate extends Template {
                 .collect(Collectors.toMap(Output::getOutputKey, Output::getOutputValue));
 
         this.templateUrl = templateUrl;
-        this.stackName = request.getStackName();
+        this.stackName = request.getClientName();
         this.parameters.add(createParameter(vpcKey, request.getVpcId()));
         this.parameters.add(createParameter(hostedZoneNameKey, request.getHostedZoneName()));
         this.parameters.add(createParameter(clientNameKey, request.getClientName()));

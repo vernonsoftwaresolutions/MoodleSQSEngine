@@ -60,6 +60,7 @@ public class SQSController {
             logger.info("about to return output " + output);
         } catch (MoodleStackException | InterruptedException e) {
             logger.error("Error processing request ", e);
+            return HttpStatus.INTERNAL_SERVER_ERROR;
 
         }
         return HttpStatus.CREATED;
