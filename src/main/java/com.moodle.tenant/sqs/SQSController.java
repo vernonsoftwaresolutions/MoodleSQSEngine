@@ -45,7 +45,7 @@ public class SQSController {
             logger.info("retrieving stack from request name {}", message.getStackName());
             outputs = client.getStackOutput(new DescribeStacksRequest()
                     .withStackName(message.getStackName()));
-            if(!outputs.isPresent() || outputs.get().size() != 1){
+            if(!outputs.isPresent() || outputs.get().size() < 1){
                 logger.error("No output returned, exiting request");
                 return HttpStatus.NOT_FOUND;
             }
