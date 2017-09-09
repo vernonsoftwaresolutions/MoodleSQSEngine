@@ -26,10 +26,12 @@ public class CloudformationClientImpl implements CloudformationClient{
 
     @Override
     public Optional<List<Output>> getStackOutput(DescribeStacksRequest request) throws MoodleStackException {
-        logger.debug("Retrieving stack status with stackName " + request);
+        logger.info("Retrieving stack status with stackName " + request);
 
         DescribeStacksResult result = this.cloudFormation.describeStacks(request);
+        logger.info("Returned result ", result);
         if(result.getStacks().isEmpty() || result.getStacks().size() > 1){
+            logger.info("Result size is invalid");
             return Optional.empty();
         }
         return Optional.of(result.getStacks().get(0).getOutputs());

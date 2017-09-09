@@ -42,7 +42,7 @@ public class SQSController {
 
         Optional<List<Output>> outputs = null;
         try {
-            logger.debug("retrieving stack from request name ", message.getStackName());
+            logger.info("retrieving stack from request name ", message.getStackName());
             outputs = client.getStackOutput(new DescribeStacksRequest()
                     .withStackName(message.getStackName()));
             if(!outputs.isPresent() || outputs.get().size() != 1){
