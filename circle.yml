@@ -19,7 +19,7 @@ dependencies:
     # - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
 test:
   override:
-    - ./gradlew clean buildZip
+    - ./gradlew clean build zipAWSArchive
   #  - aws cloudformation validate-template --template-body file://formation_assets.yaml
   #  - aws cloudformation validate-template --template-body file://formation_env.yaml
   #  - aws cloudformation validate-template --template-body file://formation_recordset.yaml
