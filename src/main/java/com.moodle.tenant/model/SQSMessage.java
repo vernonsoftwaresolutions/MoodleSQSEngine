@@ -7,6 +7,8 @@ public class SQSMessage {
     private String stackName;
     private String clientName;
     private String vpcId;
+    private String hostedZoneName;
+    private Integer priority;
 
     public String getStackName() {
         return stackName;
@@ -33,12 +35,30 @@ public class SQSMessage {
         this.vpcId = vpcId;
     }
 
+    public String getHostedZoneName() {
+        return hostedZoneName;
+    }
+
+    public void setHostedZoneName(String hostedZoneName) {
+        this.hostedZoneName = hostedZoneName;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
-        return "StackRequest{" +
+        return "SQSMessage{" +
                 "stackName='" + stackName + '\'' +
                 ", clientName='" + clientName + '\'' +
                 ", vpcId='" + vpcId + '\'' +
+                ", hostedZoneName='" + hostedZoneName + '\'' +
+                ", priority=" + priority +
                 '}';
     }
 }

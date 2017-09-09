@@ -36,12 +36,4 @@ public abstract class Template {
         return new Parameter().withParameterKey(key).withParameterValue(value);
     }
 
-    @Override
-    public String toString() {
-        return "Template{" +
-                "stackName='" + stackName + '\'' +
-                ", templateBody='" + templateUrl + '\'' +
-                ", parameters=" + parameters +
-                '}';
-    }
 }

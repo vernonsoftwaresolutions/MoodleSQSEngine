@@ -40,7 +40,7 @@ public class MoodleTemplateTest {
     private String alblistenerKey = "alblistener";
     private String alblistener = "alblistenervalue";
 
-    private String hostedZoneNameKey = "ecslbhostedzoneid";
+    private String hostedZoneNameKey = "HostedZoneName";
     private String hostedZoneName = "HostedZoneNamevalue";
 
     private String clientNameKey = "ClientName";
@@ -57,14 +57,14 @@ public class MoodleTemplateTest {
         request.setStackName(stackName);
         request.setVpcId("vpc");
         request.setClientName(clientName);
+        request.setPriority(1);
+        request.setHostedZoneName(hostedZoneName);
         outputs = new ArrayList<Output>() {{
-            add(new Output().withOutputKey(priorityKey).withOutputValue(priority));
             add(new Output().withOutputKey(ecsClusterKey).withOutputValue(ecsCluster));
             add(new Output().withOutputKey(ecslbarnKey).withOutputValue(ecslbarn));
             add(new Output().withOutputKey(ecslbdnsnameKey).withOutputValue(ecslbdnsname));
             add(new Output().withOutputKey(ecslbhostedzoneidKey).withOutputValue(ecslbhostedzoneid));
             add(new Output().withOutputKey(alblistenerKey).withOutputValue(alblistener));
-            add(new Output().withOutputKey(hostedZoneNameKey).withOutputValue(hostedZoneName));
 
         }};
 
