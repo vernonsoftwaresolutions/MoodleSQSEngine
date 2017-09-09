@@ -37,6 +37,7 @@ jar {
 task zipAWSArchive(type: Zip) {
     def artifactName = "moodle-tenant-${version}"
     def zip = artifactName + ".zip"
+    println "creating artifact ${artifactName} as zip ${zip}"
     def buildPath = 'build/libs/' + artifactName + ".jar"
     println buildPath
     from(buildPath) {
