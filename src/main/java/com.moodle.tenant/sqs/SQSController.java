@@ -26,7 +26,7 @@ import java.util.Optional;
 public class SQSController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static String MOODLE_TENANT_NAME = "moodle_tenant.yml";
-    private static String S3_BUCKET = "s3://moodle.templates/ecstenant/moodle_tenant.yml";
+    private static String S3_BUCKET = "https://s3.amazonaws.com/moodle.templates/ecstenant/moodle_tenant.yml";
 
     private TemplateExecutor executor;
     private CloudformationClient client;
