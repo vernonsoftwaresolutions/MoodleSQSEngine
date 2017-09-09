@@ -8,7 +8,7 @@ import com.moodle.tenant.cloudformation.TemplateExecutor;
 import com.moodle.tenant.exception.MoodleStackException;
 import com.moodle.tenant.model.LoadBalancer;
 import com.moodle.tenant.model.MoodleTenant;
-import com.moodle.tenant.model.StackRequest;
+import com.moodle.tenant.model.SQSMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -52,7 +52,7 @@ public class TemplateExecutorTest {
 
         MockitoAnnotations.initMocks(this);
         executor = new TemplateExecutor(amazonCloudFormation);
-        template = new MoodleTemplate(Optional.of(new ArrayList<>()), "", new StackRequest());
+        template = new MoodleTemplate(Optional.of(new ArrayList<>()), "", new SQSMessage());
         template.setStackName("SOMENAME");
     }
     @Test

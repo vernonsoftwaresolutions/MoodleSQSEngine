@@ -1,9 +1,7 @@
 package com.moodle.tenant.cloudformation;
 
 import com.amazonaws.services.cloudformation.model.Output;
-import com.amazonaws.services.cloudformation.model.Parameter;
-import com.moodle.tenant.model.MoodleTenant;
-import com.moodle.tenant.model.StackRequest;
+import com.moodle.tenant.model.SQSMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,7 @@ public class MoodleTemplate extends Template {
     private String hostedZoneNameKey = "HostedZoneName";
     private String clientNameKey = "ClientName";
 
-    public MoodleTemplate(Optional<List<Output>> outputs, String templateUrl, StackRequest request) {
+    public MoodleTemplate(Optional<List<Output>> outputs, String templateUrl, SQSMessage request) {
         parameters = new ArrayList<>();
 
         Map<String, String> moodleTenant = outputs.get().stream()
@@ -46,4 +44,18 @@ public class MoodleTemplate extends Template {
         this.parameters.add(createParameter(clientNameKey, request.getClientName()));
     }
 
+    @Override
+    public String toString() {
+        return "MoodleTemplate{" +
+                "vpcKey='" + vpcKey + '\'' +
+                ", priorityKey='" + priorityKey + '\'' +
+                ", ecsClusterKey='" + ecsClusterKey + '\'' +
+                ", ecslbarnKey='" + ecslbarnKey + '\'' +
+                ", ecslbdnsnameKey='" + ecslbdnsnameKey + '\'' +
+                ", ecslbhostedzoneidKey='" + ecslbhostedzoneidKey + '\'' +
+                ", alblistenerKey='" + alblistenerKey + '\'' +
+                ", hostedZoneNameKey='" + hostedZoneNameKey + '\'' +
+                ", clientNameKey='" + clientNameKey + '\'' +
+                '}';
+    }
 }

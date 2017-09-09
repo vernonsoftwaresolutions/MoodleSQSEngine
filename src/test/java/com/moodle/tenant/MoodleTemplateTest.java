@@ -1,9 +1,10 @@
-package com.moodle.tenant.cloudformation;
+package com.moodle.tenant;
 
 import com.amazonaws.services.cloudformation.model.Output;
 
 import com.amazonaws.services.cloudformation.model.Parameter;
-import com.moodle.tenant.model.StackRequest;
+import com.moodle.tenant.cloudformation.MoodleTemplate;
+import com.moodle.tenant.model.SQSMessage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,12 +48,12 @@ public class MoodleTemplateTest {
 
     private String templatebody = "body";
     private String stackName = "stackname";
-    private StackRequest request;
+    private SQSMessage request;
     private List<Output> outputs;
     private MoodleTemplate template;
     @Before
     public void setup() {
-        request = new StackRequest();
+        request = new SQSMessage();
         request.setStackName(stackName);
         request.setVpcId("vpc");
         request.setClientName(clientName);

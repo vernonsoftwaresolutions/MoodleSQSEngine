@@ -3,7 +3,7 @@ package com.moodle.tenant.model;
 /**
  * Created by andrewlarsen on 8/29/17.
  */
-public class StackRequest {
+public class SQSMessage {
     private String stackName;
     private String clientName;
     private String vpcId;

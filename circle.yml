@@ -12,23 +12,26 @@ dependencies:
 
   post:
     # pull down ecs template from s3
-    - aws s3 cp s3://moodle.templates/ecs/ecs.yml ecs.yml
+    # - aws s3 cp s3://moodle.templates/ecs/ecs.yml ecs.yml
     # now create ecs deployment
-    - aws cloudformation validate-template --template-body file://ecs.yml
-    - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
-    - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
+    # - aws cloudformation validate-template --template-body file://ecs.yml
+    # - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
+    # - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
 test:
   override:
     - ./gradlew clean buildZip
-    - aws cloudformation validate-template --template-body file://formation_assets.yaml
-    - aws cloudformation validate-template --template-body file://formation_env.yaml
-    - aws cloudformation validate-template --template-body file://formation_recordset.yaml
+  #  - aws cloudformation validate-template --template-body file://formation_assets.yaml
+  #  - aws cloudformation validate-template --template-body file://formation_env.yaml
+  #  - aws cloudformation validate-template --template-body file://formation_recordset.yaml
 
 deployment:
   development:
-    branch: master
+    branch: sqs_andrew
     commands:
+    # upload artifact to s3
+    - aws s3 cp dir/moodle-tenant-0.0.1.zip s3://elasticbeanstalk-moodle-deployables-us-east-1/moodle-tenant-0.0.1
     ## create deployment
-    - sh ./deploy.sh lambda.bucket.moodle $CIRCLE_BUILD_NUM dev api.vssdevelopment.com vssdevelopment.com.
-    - newman run integration/MoodleTenant.postman_collection.json
+    - aws cloudformation package --template-file elasticbeanstalk_sqs.yml --output-template-file elasticbeanstalk_sqs_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
+    - aws cloudformation deploy --template-file elasticbeanstalk_sqs_output.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs --parameter-overrides VpcId=vpc-c7aa77be DeploymentBucket=elasticbeanstalk-moodle-deployables DeploymentVersion=moodle-tenant-0.0.1 Environment=development
+
 

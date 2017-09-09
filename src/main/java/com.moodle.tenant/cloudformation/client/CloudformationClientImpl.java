@@ -4,9 +4,9 @@ import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.model.DescribeStacksRequest;
 import com.amazonaws.services.cloudformation.model.DescribeStacksResult;
 import com.amazonaws.services.cloudformation.model.Output;
-import com.moodle.tenant.cloudformation.TemplateExecutor;
 import com.moodle.tenant.exception.MoodleStackException;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +14,9 @@ import java.util.Optional;
 /**
  * Created by andrewlarsen on 8/29/17.
  */
+@Component
 public class CloudformationClientImpl implements CloudformationClient{
-    final static Logger logger = Logger.getLogger(CloudformationClientImpl.class);
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private AmazonCloudFormation cloudFormation;
 

@@ -1,0 +1,146 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+##
+# USAGE:
+# aws cloudformation package --template-file elasticbeanstalk_sqs.yml --output-template-file elasticbeanstalk_sqs_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
+# aws cloudformation deploy --template-file elasticbeanstalk_sqs_output.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs --parameter-overrides VpcId=vpc-c7aa77be DeploymentBucket=elasticbeanstalk-moodle-deployables DeploymentVersion=moodle-tenant-0.0.1 Environment=development
+#
+##
+Parameters:
+  #VPC Name
+  VpcId:
+    Type: String
+    Description: Name of vpc to add elasticbeanstalk to
+  DeploymentBucket:
+    Type: String
+    Description: S3 bucket with moodle deployable
+  DeploymentVersion:
+    Type: String
+    Description: Moodle Version Deployable
+  Environment:
+    Type: String
+    Description: Deployment environment
+    AllowedValues:
+        - development
+        - prod
+Mappings:
+  ImageMap:
+    us-east-1:
+      ami: ami-4fffc834
+    us-west-2:
+      ami: ami-aa5ebdd2
+
+# Regional Map
+  RegionMap:
+    us-east-1:
+      AZa: us-east-1a
+      AZb: us-east-1b
+      AZc: us-east-1c
+    us-west-2:
+      AZa: us-west-2a
+      AZb: us-west-2b
+      AZc: us-west-2c
+
+Resources:
+
+  ##
+  # Elastic Beanstalk Application Definition
+  ##
+  TenantProvisioner:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: Moodle SQS Application
+      Description: Elastic Beanstalk Application
+  ##
+  # Initial Moodle Application Version
+  ##
+  ProvisionerAppVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName:
+        Ref: TenantProvisioner
+      Description: Initial Tenant Provisioner App Version
+      SourceBundle:
+        S3Bucket:
+          Fn::Join:
+            - "-"
+            -
+              - Ref: DeploymentBucket
+              - Ref: "AWS::Region"
+        S3Key:
+          Ref: DeploymentVersion
+  ##
+  # Moodle elastic beanstalk environment
+  ##
+  ProvisionerEnvironment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName:
+        Ref: TenantProvisioner
+      Description: Application responsible for generating moodle tenants
+      EnvironmentName:
+        Ref: Environment
+      SolutionStackName: "64bit Amazon Linux 2017.03 v2.5.4 running Java 8"
+      Tier:
+        Name: Worker
+        Type: SQS/HTTP
+      OptionSettings:
+        -
+          Namespace: aws:autoscaling:launchconfiguration
+          OptionName: IamInstanceProfile
+          Value: aws-elasticbeanstalk-ec2-role
+        -
+          Namespace: aws:elasticbeanstalk:environment
+          OptionName: ServiceRole
+          Value: aws-elasticbeanstalk-service-role
+        -
+          Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SERVER_PORT
+          Value: 5000
+        -
+          Namespace: aws:ec2:vpc
+          OptionName: VPCId
+          Value:
+            Ref: VpcId
+        -
+          Namespace: aws:ec2:vpc
+          OptionName: Subnets
+          Value:
+            Fn::Join:
+              - ", "
+              -
+                - !ImportValue WSSubnet1tenant1
+                - !ImportValue WSSubnet2tenant1
+                - !ImportValue WSSubnet3tenant1
+        -
+          Namespace: aws:ec2:vpc
+          OptionName: ELBSubnets
+          Value:
+            Fn::Join:
+              - ", "
+              -
+                - !ImportValue WSSubnet1tenant1
+                - !ImportValue WSSubnet2tenant1
+                - !ImportValue WSSubnet3tenant1
+        -
+          Namespace: aws:ec2:vpc
+          OptionName: ELBScheme
+          Value: external
+        -
+          Namespace: aws:autoscaling:launchconfiguration
+          OptionName: InstanceType
+          Value: t2.micro
+        -
+          Namespace: aws:autoscaling:launchconfiguration
+          OptionName: ImageId
+          Value: !FindInMap [ ImageMap, !Ref "AWS::Region", ami ]
+        -
+          Namespace: aws:elasticbeanstalk:sqsd
+          OptionName: HttpPath
+          Value: /worker/queue
+      Tags:
+      - Key: ENV
+        Value:
+          Ref: Environment
+      VersionLabel:
+        Ref: ProvisionerAppVersion
