@@ -21,19 +21,21 @@ repositories {
     mavenCentral()
 }
 
-//if (System.env.CIRCLE_BUILD_NUM) {
-//
-//    version = "${System.env.CIRCLE_BUILD_NUM}"
-//}
+if (System.env.BUILD_VERSION) {
+
+    version = "${System.env.BUILD_VERSION}"
+} else{
+    version = "0.0.1"
+}
 
 jar {
     baseName = 'moodle-tenant'
-    version = '0.0.1'
+    version = version
 }
 
 
 task zipAWSArchive(type: Zip) {
-    def artifactName = "moodle-tenant-0.0.1"
+    def artifactName = "moodle-tenant-${version}"
     def zip = artifactName + ".zip"
     def buildPath = 'build/libs/' + artifactName + ".jar"
     println buildPath

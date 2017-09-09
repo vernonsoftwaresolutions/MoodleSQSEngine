@@ -1,7 +1,8 @@
 machine:
   python:
     version: 2.7.11
-
+  environment:
+      BUILD_VERSION: "0.0.${CIRCLE_BUILD_NUM}"
 dependencies:
   override:
      - chmod +x gradlew
@@ -30,16 +31,4 @@ deployment:
   development:
     branch: sqs_andrew
     commands:
-    # upload artifact to s3
-    - aws s3 cp dir/moodle-tenant-0.0.1.zip s3://elasticbeanstalk-moodle-deployables-us-east-1/moodle-tenant-0.0.1
-    ##Create application
-    - aws cloudformation package --template-file elasticbeanstalk_sqs_application.yml --output-template-file elasticbeanstalk_sqs_application_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
-    # note the || exit 0, this will not fail the build if the command fails.  I know...but unfortunately the
-    # resource in this template is not able to be deployed idempotently =/ (not a word)
-    - aws cloudformation deploy --template-file elasticbeanstalk_sqs_application.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs-app || exit 0
-    ## create deployment
-    - aws cloudformation package --template-file elasticbeanstalk_sqs.yml --output-template-file elasticbeanstalk_sqs_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
-    #todo- update to start using versioning correctly instead of just overwriting 0.0.1
-    - aws cloudformation deploy --template-file elasticbeanstalk_sqs_output.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs --parameter-overrides VpcId=vpc-c7aa77be DeploymentBucket=elasticbeanstalk-moodle-deployables DeploymentVersion=moodle-tenant-0.0.1 Environment=development
-
-
+    - ./deploy.sh elasticbeanstalk-moodle-deployables elasticbeanstalk-moodle-deployables-us-east-1 moodle-tenant-"${BUILD_VERSION}" development
