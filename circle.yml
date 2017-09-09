@@ -31,4 +31,4 @@ deployment:
   development:
     branch: sqs_andrew
     commands:
-    - ./deploy.sh elasticbeanstalk-moodle-deployables elasticbeanstalk-moodle-deployables-us-east-1 moodle-tenant-"${BUILD_VERSION}" development
+    - sh ./deploy.sh elasticbeanstalk-moodle-deployables elasticbeanstalk-moodle-deployables-us-east-1 moodle-tenant-"${BUILD_VERSION}" development vpc-c7aa77be
