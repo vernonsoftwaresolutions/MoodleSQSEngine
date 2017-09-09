@@ -42,15 +42,6 @@ Mappings:
       AZc: us-west-2c
 
 Resources:
-
-  ##
-  # Elastic Beanstalk Application Definition
-  ##
-  TenantProvisioner:
-    Type: AWS::ElasticBeanstalk::Application
-    Properties:
-      ApplicationName: Moodle SQS Application
-      Description: Elastic Beanstalk Application
   ##
   # Initial Moodle Application Version
   ##
@@ -58,7 +49,7 @@ Resources:
     Type: AWS::ElasticBeanstalk::ApplicationVersion
     Properties:
       ApplicationName:
-        Ref: TenantProvisioner
+        Ref: !ImportValue TenantProvisionerApp
       Description: Initial Tenant Provisioner App Version
       SourceBundle:
         S3Bucket:
@@ -76,7 +67,7 @@ Resources:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
       ApplicationName:
-        Ref: TenantProvisioner
+        Ref: !ImportValue TenantProvisionerApp
       Description: Application responsible for generating moodle tenants
       EnvironmentName:
         Ref: Environment
