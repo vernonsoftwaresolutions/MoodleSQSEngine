@@ -30,7 +30,7 @@ public class CloudformationClientImpl implements CloudformationClient{
 
         DescribeStacksResult result = this.cloudFormation.describeStacks(request);
         logger.info("Returned result {} ", result);
-        if(result.getStacks().isEmpty() || result.getStacks().size() > 1){
+        if(result.getStacks().isEmpty()){
             logger.info("Result size is invalid");
             return Optional.empty();
         }
