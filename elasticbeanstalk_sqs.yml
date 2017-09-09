@@ -48,8 +48,7 @@ Resources:
   ProvisionerAppVersion:
     Type: AWS::ElasticBeanstalk::ApplicationVersion
     Properties:
-      ApplicationName:
-        Ref: !ImportValue TenantProvisionerApp
+      ApplicationName: !ImportValue TenantProvisionerApp
       Description: Initial Tenant Provisioner App Version
       SourceBundle:
         S3Bucket:
@@ -66,8 +65,7 @@ Resources:
   ProvisionerEnvironment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
-      ApplicationName:
-        Ref: !ImportValue TenantProvisionerApp
+      ApplicationName: !ImportValue TenantProvisionerApp
       Description: Application responsible for generating moodle tenants
       EnvironmentName:
         Ref: Environment
