@@ -40,7 +40,7 @@ public class MoodleTemplateTest {
     private String alblistenerKey = "alblistener";
     private String alblistener = "alblistenervalue";
 
-    private String hostedZoneNameKey = "HostedZoneName";
+    private String hostedZoneNameKey = "ecslbhostedzoneid";
     private String hostedZoneName = "HostedZoneNamevalue";
 
     private String clientNameKey = "ClientName";

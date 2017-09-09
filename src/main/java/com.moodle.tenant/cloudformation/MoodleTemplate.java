@@ -22,7 +22,7 @@ public class MoodleTemplate extends Template {
     private String ecslbdnsnameKey = "ecslbdnsname";
     private String ecslbhostedzoneidKey = "ecslbhostedzoneid";
     private String alblistenerKey = "alblistener";
-    private String hostedZoneNameKey = "HostedZoneName";
+    private String hostedZoneNameKey = "ecslbhostedzoneid";
     private String clientNameKey = "ClientName";
 
     public MoodleTemplate(Optional<List<Output>> outputs, String templateUrl, SQSMessage request) {
