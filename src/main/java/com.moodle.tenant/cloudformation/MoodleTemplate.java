@@ -50,6 +50,8 @@ public class MoodleTemplate extends Template {
     public String toString() {
         return "MoodleTemplate{" +
                 "vpcKey='" + vpcKey + '\'' +
+                "templateUrl='" + templateUrl + '\'' +
+                "stackName='" + stackName + '\'' +
                 ", priorityKey='" + priorityKey + '\'' +
                 ", ecsClusterKey='" + ecsClusterKey + '\'' +
                 ", ecslbarnKey='" + ecslbarnKey + '\'' +

@@ -43,23 +43,32 @@ public class SQSController {
         Optional<List<Output>> outputs = null;
         try {
             logger.info("retrieving stack from request name {}", message.getStackName());
+
             outputs = client.getStackOutput(new DescribeStacksRequest()
                     .withStackName(message.getStackName()));
+
             if(!outputs.isPresent() || outputs.get().size() < 1){
                 logger.error("No output returned, exiting request");
                 return HttpStatus.NOT_FOUND;
             }
+
             logger.info("Retrieved output from stack {} value: {}", message.getStackName(), outputs.get().get(0));
+
             MoodleTemplate moodleTenant = new MoodleTemplate(outputs, S3_BUCKET, message);
+
             logger.info("Created new moodletenant object {}", moodleTenant);
+
             //todo-actually use optional
             Stack stack = executor.buildStack(Optional.of(moodleTenant));
 
             StackResponse output = new StackResponse(stack.getStackId());
 
             logger.info("about to return output " + output);
+
         } catch (MoodleStackException | InterruptedException e) {
+
             logger.error("Error processing request ", e);
+
             return HttpStatus.INTERNAL_SERVER_ERROR;
 
         }
