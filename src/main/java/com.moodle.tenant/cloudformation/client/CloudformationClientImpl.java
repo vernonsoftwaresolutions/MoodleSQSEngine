@@ -29,7 +29,7 @@ public class CloudformationClientImpl implements CloudformationClient{
         logger.info("Retrieving stack status with stackName " + request);
 
         DescribeStacksResult result = this.cloudFormation.describeStacks(request);
-        logger.info("Returned result ", result);
+        logger.info("Returned result {} ", result);
         if(result.getStacks().isEmpty() || result.getStacks().size() > 1){
             logger.info("Result size is invalid");
             return Optional.empty();
