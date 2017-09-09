@@ -51,8 +51,8 @@ public class SQSController {
             }
             logger.info("Retrieved output from stack {} value: {}", message.getStackName(), outputs.get().get(0));
             MoodleTemplate moodleTenant = new MoodleTemplate(outputs, S3_BUCKET, message);
-            logger.info("Created new moodletenant object ", moodleTenant);
-            //todo-actually used optional
+            logger.info("Created new moodletenant object {}", moodleTenant);
+            //todo-actually use optional
             Stack stack = executor.buildStack(Optional.of(moodleTenant));
 
             StackResponse output = new StackResponse(stack.getStackId());

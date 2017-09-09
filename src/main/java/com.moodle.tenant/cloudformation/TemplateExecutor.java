@@ -32,7 +32,7 @@ public class TemplateExecutor {
         if(!template.isPresent()){
             throw new IllegalArgumentException("No template provided");
         }
-        logger.debug("About to create stack with name " + template);
+        logger.info("About to create stack with name {}",  template);
         CreateStackRequest stackRequest = new CreateStackRequest()
                 .withCapabilities(Capability.CAPABILITY_IAM)
                 .withStackName(template.get().getStackName())
