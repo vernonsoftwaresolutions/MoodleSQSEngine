@@ -32,12 +32,14 @@ public class TemplateExecutor {
         if(!template.isPresent()){
             throw new IllegalArgumentException("No template provided");
         }
+
         logger.info("About to create stack with name {}",  template);
         CreateStackRequest stackRequest = new CreateStackRequest()
                 .withCapabilities(Capability.CAPABILITY_IAM)
                 .withStackName(template.get().getStackName())
                 .withParameters(template.get().getParameters())
-                .withTemplateURL(template.get().getTemplateUrl());
+                .withTemplateURL(template.get().getTemplateUrl())
+                .withTags(template.get().getTag());
 
         //todo-if exists update?
         CreateStackResult result = this.cloudFormation.createStack(stackRequest);

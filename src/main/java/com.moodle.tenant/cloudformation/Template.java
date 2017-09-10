@@ -1,6 +1,7 @@
 package com.moodle.tenant.cloudformation;
 
 import com.amazonaws.services.cloudformation.model.Parameter;
+import com.amazonaws.services.cloudformation.model.Tag;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public abstract class Template {
     protected String stackName;
     protected String templateUrl;
+    protected Tag tag;
     protected List<Parameter> parameters;
 
     public String getStackName() {
@@ -32,8 +34,18 @@ public abstract class Template {
         return parameters;
     }
 
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
     public Parameter createParameter(String key, String value){
         return new Parameter().withParameterKey(key).withParameterValue(value);
     }
+
+
 
 }

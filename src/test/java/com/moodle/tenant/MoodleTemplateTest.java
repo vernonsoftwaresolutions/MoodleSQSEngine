@@ -141,6 +141,20 @@ public class MoodleTemplateTest {
         assertThat(getParameter(template.getParameters(), vpcKey), is(vpc));
 
     }
+    @Test
+    public void createTemplateTenantKey() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTag().getKey(), is("TYPE"));
+
+    }
+    @Test
+    public void createTemplateTenantValue() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTag().getValue(), is("TENANT"));
+
+    }
     public String getParameter(List<Parameter> parameters, String key){
         return parameters.stream().filter(parameter ->
             parameter.getParameterKey().equals(key)

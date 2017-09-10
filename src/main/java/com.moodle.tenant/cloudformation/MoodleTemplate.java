@@ -1,6 +1,7 @@
 package com.moodle.tenant.cloudformation;
 
 import com.amazonaws.services.cloudformation.model.Output;
+import com.amazonaws.services.cloudformation.model.Tag;
 import com.moodle.tenant.model.SQSMessage;
 
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ public class MoodleTemplate extends Template {
 
     //todo-factor out SQSMessage, don't want to tightly couple request with Template
     public MoodleTemplate(Optional<List<Output>> outputs, String templateUrl, SQSMessage request) {
+        //create tag
+        this.tag = new Tag()
+                .withKey("TYPE")
+                .withValue("TENANT");
+
         parameters = new ArrayList<>();
 
         Map<String, String> moodleTenant = outputs.get().stream()
