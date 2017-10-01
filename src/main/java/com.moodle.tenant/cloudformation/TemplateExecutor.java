@@ -71,7 +71,6 @@ public class TemplateExecutor {
         logger.debug("Retrieving stack status with stackId " + stackId);
         DescribeStacksRequest request = new DescribeStacksRequest();
         request.setStackName(stackId);
-
         return this.cloudFormation.describeStacks(request);
     }
 }

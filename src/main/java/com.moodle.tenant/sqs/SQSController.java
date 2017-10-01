@@ -72,6 +72,7 @@ public class SQSController {
             return HttpStatus.INTERNAL_SERVER_ERROR;
 
         }
-        return HttpStatus.CREATED;
+        //need to return okay so EB Worker will delete message?
+        return HttpStatus.OK;
     }
 }
