@@ -40,6 +40,11 @@ task zipAWSArchive(type: Zip) {
     println "creating artifact ${artifactName} as zip ${zip}"
     def buildPath = 'build/libs/' + artifactName + ".jar"
     println buildPath
+    from('eb/'){
+        include '*'
+        include '**/*'
+        into('')
+    }
     from(buildPath) {
         include '*'
         into('')
