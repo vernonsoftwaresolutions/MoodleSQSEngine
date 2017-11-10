@@ -12,8 +12,13 @@ import java.util.stream.Collectors;
 
 /**
  * Created by andrewlarsen on 8/27/17.
+ * Class used to represent a moodle cloudfformation template
+ * todo-update this to create a builder rather than building in the constructor
  */
 public class MoodleTemplate extends Template {
+    private static final String TAG_TYPE_KEY = "TYPE";
+    private static final String TAG_TYPE_VALUE = "TENANT";
+    private static final String TAG_ID_KEY = "ID";
 
     //todo- create as properties
     private String vpcKey = "VpcId";
@@ -28,11 +33,16 @@ public class MoodleTemplate extends Template {
 
     //todo-factor out SQSMessage, don't want to tightly couple request with Template
     public MoodleTemplate(Optional<List<Output>> outputs, String templateUrl, SQSMessage request) {
+        List<Tag> tags = new ArrayList<>();
+        //add tags
+        tags.add(new Tag()
+                .withKey(TAG_TYPE_KEY)
+                .withValue(TAG_TYPE_VALUE));
+        tags.add(new Tag()
+                .withKey(TAG_ID_KEY)
+                .withValue(request.getId()));
         //create tag
-        this.tag = new Tag()
-                .withKey("TYPE")
-                .withValue("TENANT");
-
+        this.tags = tags;
         parameters = new ArrayList<>();
 
         Map<String, String> moodleTenant = outputs.get().stream()

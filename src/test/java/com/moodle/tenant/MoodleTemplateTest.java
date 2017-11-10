@@ -48,6 +48,7 @@ public class MoodleTemplateTest {
 
     private String templatebody = "body";
     private String stackName = "stackname";
+    private String id = "SOMEID";
     private SQSMessage request;
     private List<Output> outputs;
     private MoodleTemplate template;
@@ -145,14 +146,28 @@ public class MoodleTemplateTest {
     public void createTemplateTenantKey() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
-        assertThat(template.getTag().getKey(), is("TYPE"));
+        assertThat(template.getTags().get(0).getKey(), is("TYPE"));
 
     }
     @Test
     public void createTemplateTenantValue() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
-        assertThat(template.getTag().getValue(), is("TENANT"));
+        assertThat(template.getTags().get(0).getValue(), is("TENANT"));
+
+    }
+    @Test
+    public void createTemplateIdKey() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTags().get(1).getKey(), is("ID"));
+
+    }
+    @Test
+    public void createTemplateIdValue() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTags().get(1).getValue(), is(request.getId()));
 
     }
     public String getParameter(List<Parameter> parameters, String key){

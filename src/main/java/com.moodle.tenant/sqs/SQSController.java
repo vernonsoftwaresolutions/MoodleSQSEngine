@@ -44,21 +44,25 @@ public class SQSController {
         try {
             logger.info("retrieving stack from request name {}", message.getStackName());
 
+            //get the stack name of the ECS instance that will deploy the tenant/client
             outputs = client.getStackOutput(new DescribeStacksRequest()
                     .withStackName(message.getStackName()));
-
+            //if it doesn't exist, return an error because we can't generate the tenant without it
+            //since you know, that's the platform...
             if(!outputs.isPresent() || outputs.get().size() < 1){
                 logger.error("No output returned, exiting request");
                 return HttpStatus.NOT_FOUND;
             }
 
             logger.info("Retrieved output from stack {} value: {}", message.getStackName(), outputs.get().get(0));
-
+            //otherwise the stack name that was passed in exists so
+            //let's create the Template object that will be created
             MoodleTemplate moodleTenant = new MoodleTemplate(outputs, S3_BUCKET, message);
 
             logger.info("Created new moodletenant object {}", moodleTenant);
 
             //todo-actually use optional
+            //now build the stack
             Stack stack = executor.buildStack(Optional.of(moodleTenant));
 
             StackResponse output = new StackResponse(stack.getStackId());
