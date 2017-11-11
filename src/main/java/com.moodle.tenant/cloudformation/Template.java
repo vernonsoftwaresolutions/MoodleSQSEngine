@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Template {
     protected String stackName;
     protected String templateUrl;
-    protected Tag tag;
+    protected List<Tag> tags;
     protected List<Parameter> parameters;
 
     public String getStackName() {
@@ -34,12 +34,17 @@ public abstract class Template {
         return parameters;
     }
 
-    public Tag getTag() {
-        return tag;
+
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void setParameters(List<Parameter> parameters) {
+        this.parameters = parameters;
     }
 
     public Parameter createParameter(String key, String value){

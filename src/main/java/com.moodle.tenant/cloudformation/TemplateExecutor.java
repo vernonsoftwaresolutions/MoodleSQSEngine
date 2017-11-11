@@ -39,7 +39,7 @@ public class TemplateExecutor {
                 .withStackName(template.get().getStackName())
                 .withParameters(template.get().getParameters())
                 .withTemplateURL(template.get().getTemplateUrl())
-                .withTags(template.get().getTag());
+                .withTags(template.get().getTags());
 
         //todo-if exists update?
         CreateStackResult result = this.cloudFormation.createStack(stackRequest);
