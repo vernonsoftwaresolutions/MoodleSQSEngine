@@ -1,10 +1,10 @@
-package com.moodle.tenant;
+package com.moodle.sites;
 
 import com.amazonaws.services.cloudformation.model.Output;
 
 import com.amazonaws.services.cloudformation.model.Parameter;
-import com.moodle.tenant.cloudformation.MoodleTemplate;
-import com.moodle.tenant.model.SQSMessage;
+import com.moodle.sites.cloudformation.MoodleTemplate;
+import com.moodle.sites.model.SQSMessage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,7 +48,9 @@ public class MoodleTemplateTest {
 
     private String templatebody = "body";
     private String stackName = "stackname";
-    private String id = "SOMEID";
+
+    private String accountId = "SOMEID";
+    private String siteId = "SOMESITEID";
     private SQSMessage request;
     private List<Output> outputs;
     private MoodleTemplate template;
@@ -60,6 +62,8 @@ public class MoodleTemplateTest {
         request.setClientName(clientName);
         request.setPriority(1);
         request.setHostedZoneName(hostedZoneName);
+        request.setSiteId(siteId);
+        request.setAccountId(accountId);
         outputs = new ArrayList<Output>() {{
             add(new Output().withOutputKey(ecsClusterKey).withOutputValue(ecsCluster));
             add(new Output().withOutputKey(ecslbarnKey).withOutputValue(ecslbarn));
@@ -157,17 +161,31 @@ public class MoodleTemplateTest {
 
     }
     @Test
-    public void createTemplateIdKey() throws Exception {
+    public void createTemplateAccountIdKey() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
-        assertThat(template.getTags().get(1).getKey(), is("ID"));
+        assertThat(template.getTags().get(1).getKey(), is("ACCOUNTID"));
 
     }
     @Test
-    public void createTemplateIdValue() throws Exception {
+    public void createTemplateAccountIdValue() throws Exception {
         template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
 
-        assertThat(template.getTags().get(1).getValue(), is(request.getId()));
+        assertThat(template.getTags().get(1).getValue(), is(this.accountId));
+
+    }
+    @Test
+    public void createTemplateSiteIdKey() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTags().get(2).getKey(), is("SITEID"));
+
+    }
+    @Test
+    public void createTemplateSiteIdValue() throws Exception {
+        template = new MoodleTemplate(Optional.of(outputs), templatebody, request);
+
+        assertThat(template.getTags().get(2).getValue(), is(this.siteId));
 
     }
     public String getParameter(List<Parameter> parameters, String key){

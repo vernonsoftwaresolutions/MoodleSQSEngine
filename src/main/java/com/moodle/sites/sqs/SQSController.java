@@ -1,14 +1,14 @@
-package com.moodle.tenant.sqs;
+package com.moodle.sites.sqs;
 
 import com.amazonaws.services.cloudformation.model.DescribeStacksRequest;
 import com.amazonaws.services.cloudformation.model.Output;
 import com.amazonaws.services.cloudformation.model.Stack;
-import com.moodle.tenant.cloudformation.MoodleTemplate;
-import com.moodle.tenant.cloudformation.TemplateExecutor;
-import com.moodle.tenant.cloudformation.client.CloudformationClient;
-import com.moodle.tenant.exception.MoodleStackException;
-import com.moodle.tenant.model.SQSMessage;
-import com.moodle.tenant.model.StackResponse;
+import com.moodle.sites.cloudformation.MoodleTemplate;
+import com.moodle.sites.cloudformation.TemplateExecutor;
+import com.moodle.sites.cloudformation.client.CloudformationClient;
+import com.moodle.sites.exception.MoodleStackException;
+import com.moodle.sites.model.SQSMessage;
+import com.moodle.sites.model.StackResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -44,10 +44,10 @@ public class SQSController {
         try {
             logger.info("retrieving stack from request name {}", message.getStackName());
 
-            //get the stack name of the ECS instance that will deploy the tenant/client
+            //get the stack name of the ECS instance that will deploy the sites/client
             outputs = client.getStackOutput(new DescribeStacksRequest()
                     .withStackName(message.getStackName()));
-            //if it doesn't exist, return an error because we can't generate the tenant without it
+            //if it doesn't exist, return an error because we can't generate the sites without it
             //since you know, that's the platform...
             if(!outputs.isPresent() || outputs.get().size() < 1){
                 logger.error("No output returned, exiting request");

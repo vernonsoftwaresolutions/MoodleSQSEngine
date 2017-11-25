@@ -1,12 +1,12 @@
-package com.moodle.tenant.sqs;
+package com.moodle.sites.sqs;
 
 import com.amazonaws.services.cloudformation.model.Stack;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moodle.tenant.cloudformation.TemplateExecutor;
-import com.moodle.tenant.cloudformation.client.CloudformationClient;
-import com.moodle.tenant.exception.MoodleStackException;
-import com.moodle.tenant.model.LoadBalancer;
-import com.moodle.tenant.model.SQSMessage;
+import com.moodle.sites.cloudformation.TemplateExecutor;
+import com.moodle.sites.cloudformation.client.CloudformationClient;
+import com.moodle.sites.exception.MoodleStackException;
+import com.moodle.sites.model.LoadBalancer;
+import com.moodle.sites.model.SQSMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

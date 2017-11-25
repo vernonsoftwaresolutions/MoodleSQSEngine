@@ -1,4 +1,4 @@
-group 'com.moodle.tenant'
+group 'com.moodle.sites'
 version '1.0'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'java'
@@ -29,13 +29,13 @@ if (System.env.BUILD_VERSION) {
 }
 
 jar {
-    baseName = 'moodle-tenant'
+    baseName = 'moodle-sites'
     version = version
 }
 
 
 task zipAWSArchive(type: Zip) {
-    def artifactName = "moodle-tenant-${version}"
+    def artifactName = "moodle-sites-${version}"
     def zip = artifactName + ".zip"
     println "creating artifact ${artifactName} as zip ${zip}"
     def buildPath = 'build/libs/' + artifactName + ".jar"

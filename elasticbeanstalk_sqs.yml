@@ -3,7 +3,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 ##
 # USAGE:
 # aws cloudformation package --template-file elasticbeanstalk_sqs.yml --output-template-file elasticbeanstalk_sqs_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
-# aws cloudformation deploy --template-file elasticbeanstalk_sqs_output.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs --parameter-overrides VpcId=vpc-c7aa77be DeploymentBucket=elasticbeanstalk-moodle-deployables DeploymentVersion=moodle-tenant-0.0.1 Environment=development
+# aws cloudformation deploy --template-file elasticbeanstalk_sqs_output.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs --parameter-overrides VpcId=vpc-c7aa77be DeploymentBucket=elasticbeanstalk-moodle-deployables DeploymentVersion=moodle-sites-0.0.1 Environment=development
 #
 ##
 Parameters:

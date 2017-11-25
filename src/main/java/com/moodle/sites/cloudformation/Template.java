@@ -1,4 +1,4 @@
-package com.moodle.tenant.cloudformation;
+package com.moodle.sites.cloudformation;
 
 import com.amazonaws.services.cloudformation.model.Parameter;
 import com.amazonaws.services.cloudformation.model.Tag;

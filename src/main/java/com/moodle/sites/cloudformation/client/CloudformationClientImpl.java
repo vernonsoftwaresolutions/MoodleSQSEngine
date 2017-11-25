@@ -1,10 +1,10 @@
-package com.moodle.tenant.cloudformation.client;
+package com.moodle.sites.cloudformation.client;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.model.DescribeStacksRequest;
 import com.amazonaws.services.cloudformation.model.DescribeStacksResult;
 import com.amazonaws.services.cloudformation.model.Output;
-import com.moodle.tenant.exception.MoodleStackException;
+import com.moodle.sites.exception.MoodleStackException;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
