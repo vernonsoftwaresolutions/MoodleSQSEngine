@@ -1,4 +1,4 @@
-package com.moodle.tenant.model;
+package com.moodle.sites.model;
 
 /**
  * Created by andrewlarsen on 8/24/17.

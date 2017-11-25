@@ -1,4 +1,4 @@
-package com.moodle.tenant.exception;
+package com.moodle.sites.exception;
 
 /**
  * Created by andrewlarsen on 8/27/17.

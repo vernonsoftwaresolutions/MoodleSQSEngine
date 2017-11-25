@@ -1,19 +1,24 @@
-package com.moodle.tenant.model;
+package com.moodle.sites.model;
 
 /**
  * Created by andrewlarsen on 8/29/17.
  */
 public class SQSMessage {
+
     /*
-        ID of the requester that is creating the instance
+        Id of the account that is creating the site
      */
-    private String id;
+    private String accountId;
     /*
-        Name of the ECS Stack that will be used to create the tenant
+        Id of the site that is to be generated
+     */
+    private String siteId;
+    /*
+        Name of the ECS Stack that will be used to create the sites
      */
     private String stackName;
     /*
-        Name of the tenant that will be created.  This will end up being the stack name
+        Name of the sites that will be created.  This will end up being the stack name
         of the moodle container instance
      */
     private String clientName;
@@ -22,7 +27,7 @@ public class SQSMessage {
      */
     private String vpcId;
     /*
-        DNS of the tenant
+        DNS of the sites
      */
     private String hostedZoneName;
     /*
@@ -71,18 +76,28 @@ public class SQSMessage {
         this.priority = priority;
     }
 
-    public String getId() {
-        return id;
+
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(String siteId) {
+        this.siteId = siteId;
     }
 
     @Override
     public String toString() {
         return "SQSMessage{" +
-                "id='" + id + '\'' +
+                "accountId='" + accountId + '\'' +
+                ", siteId='" + siteId + '\'' +
                 ", stackName='" + stackName + '\'' +
                 ", clientName='" + clientName + '\'' +
                 ", vpcId='" + vpcId + '\'' +

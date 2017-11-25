@@ -1,4 +1,4 @@
-package com.moodle.tenant.cloudformation.client;
+package com.moodle.sites.cloudformation.client;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.model.DescribeStacksRequest;

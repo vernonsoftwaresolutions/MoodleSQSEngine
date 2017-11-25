@@ -1,8 +1,8 @@
-package com.moodle.tenant.cloudformation.client;
+package com.moodle.sites.cloudformation.client;
 
 import com.amazonaws.services.cloudformation.model.DescribeStacksRequest;
 import com.amazonaws.services.cloudformation.model.Output;
-import com.moodle.tenant.exception.MoodleStackException;
+import com.moodle.sites.exception.MoodleStackException;
 
 import java.util.List;
 import java.util.Optional;

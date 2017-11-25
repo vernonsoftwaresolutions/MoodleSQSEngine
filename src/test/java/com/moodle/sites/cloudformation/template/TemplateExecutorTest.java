@@ -1,14 +1,14 @@
-package com.moodle.tenant.cloudformation.template;
+package com.moodle.sites.cloudformation.template;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.model.*;
-import com.moodle.tenant.cloudformation.MoodleTemplate;
-import com.moodle.tenant.cloudformation.Template;
-import com.moodle.tenant.cloudformation.TemplateExecutor;
-import com.moodle.tenant.exception.MoodleStackException;
-import com.moodle.tenant.model.LoadBalancer;
-import com.moodle.tenant.model.MoodleTenant;
-import com.moodle.tenant.model.SQSMessage;
+import com.moodle.sites.cloudformation.MoodleTemplate;
+import com.moodle.sites.cloudformation.Template;
+import com.moodle.sites.cloudformation.TemplateExecutor;
+import com.moodle.sites.exception.MoodleStackException;
+import com.moodle.sites.model.LoadBalancer;
+import com.moodle.sites.model.MoodleTenant;
+import com.moodle.sites.model.SQSMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

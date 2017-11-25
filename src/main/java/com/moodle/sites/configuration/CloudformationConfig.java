@@ -1,4 +1,4 @@
-package com.moodle.tenant.configuration;
+package com.moodle.sites.configuration;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormation;
 import com.amazonaws.services.cloudformation.AmazonCloudFormationClientBuilder;
