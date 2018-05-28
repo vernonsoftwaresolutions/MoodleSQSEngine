@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+##
+# NOTE- In order to create a CI pipeline for continuous deployments this needs to be factored out
+# and only called upon initial deployment since a deploy to a resource of type
+#  AWS::ElasticBeanstalk::Application is not idempotent
+# USAGE:
+# aws cloudformation package --template-file elasticbeanstalk_sqs_application.yml --output-template-file elasticbeanstalk_sqs_application_output.yml --s3-bucket elasticbeanstalk-moodle-deployables
+# aws cloudformation deploy --template-file elasticbeanstalk_sqs_application.yml --capabilities CAPABILITY_IAM --stack-name eb-sqs-app
+#
+##
+
+Resources:
+
+  ##
+  # Elastic Beanstalk Application Definition
+  ##
+  TenantProvisionerApp:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: Moodle SQS Application
+      Description: Elastic Beanstalk Application
+
+Outputs:
+  TenantProvisionerApp:
+    Description: Application definition for sqs eb worker
+    Value: !Ref TenantProvisionerApp
+    Export:
+      Name: TenantProvisionerApp

@@ -1,34 +1,34 @@
 machine:
   python:
     version: 2.7.11
-
+  environment:
+      BUILD_VERSION: "0.0.${CIRCLE_BUILD_NUM}"
 dependencies:
   override:
      - chmod +x gradlew
   pre:
     - pip install awscli
     - aws configure set default.region us-east-1
-    - npm install newman --global
+   # uncomment when integration tests are written
+   # - npm install newman --global
 
-  post:
+  # UNCOMMENT BELOW IF DEPLOYING COMPLETELY FROM SCRATCH
+  # Still not certain how we want to structure our entire pipeline and what is expected to be existing on each run of a pipeline
+  # post:
     # pull down ecs template from s3
-    - aws s3 cp s3://moodle.templates/ecs/ecs.yml ecs.yml
+    # - aws s3 cp s3://moodle.templates/ecs/ecs.yml ecs.yml
     # now create ecs deployment
-    - aws cloudformation validate-template --template-body file://ecs.yml
-    - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
-    - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
+    # - aws cloudformation validate-template --template-body file://ecs.yml
+    # - aws cloudformation package --template-file ecs.yml --output-template-file ecs-output.yml --s3-bucket circleci.deployables
+    # - aws cloudformation deploy --template-file ecs-output.yml --capabilities CAPABILITY_IAM --stack-name moodle-ecs-single --parameter-overrides KeyName=dummy_key1 VpcId=vpc-c7aa77be SubnetId=subnet-b61d81fe,subnet-0202dc58 InstanceType=t2.medium || exit 0
 test:
   override:
-    - ./gradlew clean buildZip
-    - aws cloudformation validate-template --template-body file://formation_assets.yaml
-    - aws cloudformation validate-template --template-body file://formation_env.yaml
-    - aws cloudformation validate-template --template-body file://formation_recordset.yaml
+    - ./gradlew clean build zipAWSArchive
+    - aws cloudformation validate-template --template-body file://elasticbeanstalk_sqs_application.yml
+    - aws cloudformation validate-template --template-body file://elasticbeanstalk_sqs.yml
 
 deployment:
   development:
-    branch: master
+    branch: sqs_andrew
     commands:
-    ## create deployment
-    - sh ./deploy.sh lambda.bucket.moodle $CIRCLE_BUILD_NUM dev api.vssdevelopment.com vssdevelopment.com.
-    - newman run integration/MoodleTenant.postman_collection.json
-
+    - sh ./deploy.sh elasticbeanstalk-moodle-deployables elasticbeanstalk-moodle-deployables-us-east-1 moodle-sites-"${BUILD_VERSION}".zip development vpc-c7aa77be

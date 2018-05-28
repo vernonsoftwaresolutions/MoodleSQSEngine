@@ -3,8 +3,7 @@
 	"name": "MoodleTenant",
 	"description": "",
 	"order": [
-		"2fccb2ad-aa74-2e68-fc4a-7ec92be6b969",
-		"345d291e-cc6f-06df-93b0-647bd9a55b5f"
+		"bff88fb0-66a3-7180-f91a-707183725a58"
 	],
 	"folders": [],
 	"folders_order": [],
@@ -13,7 +12,7 @@
 	"public": false,
 	"requests": [
 		{
-			"id": "2fccb2ad-aa74-2e68-fc4a-7ec92be6b969",
+			"id": "bff88fb0-66a3-7180-f91a-707183725a58",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
 				{
@@ -25,50 +24,21 @@
 			],
 			"url": "https://api.vssdevelopment.com/dev/moodle/tenants",
 			"queryParams": [],
-			"preRequestScript": null,
+			"preRequestScript": "var randomClient = Math.random().toString(36).slice(2)\n\nvar randomPriority = Math.floor(Math.random() * 100) + 1  \n\nvar randomSiteId = Math.random().toString(36).slice(2)\npostman.setGlobalVariable(\"randomClient\",randomClient);\npostman.setGlobalVariable(\"randomPriority\",randomPriority);\npostman.setGlobalVariable(\"randomSiteId\",randomSiteId);\n",
 			"pathVariables": {},
 			"pathVariableData": [],
 			"method": "POST",
 			"data": [],
 			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"stackId exists\"] = jsonData.stackId !== null && jsonData.stackId !== undefined;",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"Status code is 202\"] = responseCode.code === 202;\ntests[\"messageId exists exists\"] = jsonData.value !== null && jsonData.messageId !== undefined\n\ntests[\"Access-Control-Allow-Origin is present\"] = postman.getResponseHeader(\"Access-Control-Allow-Origin\");",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1504143466471,
+			"time": 1511637336532,
 			"name": "POST Client 1",
 			"description": "initial test",
 			"collectionId": "e85fd743-c0e8-9539-6a18-8691d365a671",
 			"responses": [],
-			"rawModeData": "{\n  \"stackName\": \"client1-stack\",\n  \"clientName\": \"client1\",\n  \"vpcId\": \"vpc-c7aa77be\"\n}"
-		},
-		{
-			"id": "345d291e-cc6f-06df-93b0-647bd9a55b5f",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://api.vssdevelopment.com/dev/moodle/tenants",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": "var jsonData = JSON.parse(responseBody);\n\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"stackId exists\"] = jsonData.stackId !== null && jsonData.stackId !== undefined",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1504143469975,
-			"name": "POST Client 2",
-			"description": "initial test",
-			"collectionId": "e85fd743-c0e8-9539-6a18-8691d365a671",
-			"responses": [],
-			"rawModeData": "{\n  \"stackName\": \"client1-stack\",\n  \"clientName\": \"client2\",\n  \"vpcId\": \"vpc-c7aa77be\"\n}"
+			"rawModeData": "{\n\t\"accountId\": \"someaccountguid\",\n\t\"siteId\": \"{{randomSiteId}}\"\n\t\"stackName\": \"moodle-ecs-single\",\n\t\"clientName\": \"CoolCo{{randomClient}}\",\n\t\"vpcId\": \"vpc-c7aa77be\",\n\t\"hostedZoneName\": \"vssdevelopment.com\",\n\t\"priority\": \"{{randomPriority}}\"\n}"
 		}
 	]
 }

@@ -1,38 +1,66 @@
-group 'com.moodle.tenant'
+group 'com.moodle.sites'
 version '1.0'
-
+apply plugin: 'org.springframework.boot'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
+if (System.env.BUILD_VERSION) {
+
+    version = "${System.env.BUILD_VERSION}"
+} else{
+    version = "0.0.1"
+}
+
 jar {
-    baseName = 'moodle-tenant'
-    version = ''
+    baseName = 'moodle-sites'
+    version = version
 }
 
-task buildZip(type: Zip) {
-    from compileJava
-    from processResources
-    archiveName 'MoodleTenantlambda.zip'
-    into('lib') {
-        from configurations.runtime
+
+task zipAWSArchive(type: Zip) {
+    def artifactName = "moodle-sites-${version}"
+    def zip = artifactName + ".zip"
+    println "creating artifact ${artifactName} as zip ${zip}"
+    def buildPath = 'build/libs/' + artifactName + ".jar"
+    println buildPath
+    from('eb/'){
+        include '*'
+        include '**/*'
+        into('')
     }
+    from(buildPath) {
+        include '*'
+        into('')
+    }
+    archiveName zip
+    destinationDir(file('dir/'))
 }
 
-build.dependsOn buildZip
+build.dependsOn zipAWSArchive
 
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.amazonaws:aws-lambda-java-core:1.1.0')
     compile group: 'com.amazonaws', name: 'aws-java-sdk-cloudformation', version: '1.11.182'
     //compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.105'
     compile('log4j:log4j:1.2.17')
-    compile('com.amazonaws:aws-lambda-java-log4j:1.0.0')
-
-    testCompile('org.mockito:mockito-core:1.8.4')
-    testCompile('junit:junit:4.11')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
